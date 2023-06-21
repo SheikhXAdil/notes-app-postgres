@@ -9,7 +9,7 @@ import { InferModel } from "drizzle-orm";
 import { sql } from "@vercel/postgres";
 
 export const notesTable = pgTable("notes", {
-    id: serial("id").primaryKey(),
+    id: varchar("id", { length: 255 }).primaryKey(),
     title: varchar("title", { length: 255 }).notNull(),
     note: text("note").notNull()
 })

@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 import { db, Note, newNote, notesTable } from "@/lib/drizzle";
 import { eq } from 'drizzle-orm';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 export async function GET(request: NextRequest) {
 
     try {
-        await sql`CREATE TABLE IF NOT EXISTS Notes(id serial, Title varchar(255), Note text)`
+        await sql`CREATE TABLE IF NOT EXISTS Notes(id varchar(255), Title varchar(255), Note text)`
 
         const res: Note[] = await db.select().from(notesTable).execute()
         return NextResponse.json({ data: res })
@@ -25,6 +27,7 @@ export async function POST(request: NextRequest) {
     try {
         if (req.title && req.note) {
             const res = await db.insert(notesTable).values({
+                id: uuidv4(),
                 title: req.title,
                 note: req.note
             }).returning().execute()
@@ -41,7 +44,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-    const reqId = Number(request.nextUrl.searchParams.get("id"))
+    const reqId = request.nextUrl.searchParams.get("id")
     try {
         if (reqId) {
             const res = await db.delete(notesTable).where(eq(notesTable.id, reqId)).returning().execute()
@@ -56,7 +59,7 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-    const reqId = Number(request.nextUrl.searchParams.get("id"))
+    const reqId = request.nextUrl.searchParams.get("id")
     const req: newNote = await request.json()
 
     try {
