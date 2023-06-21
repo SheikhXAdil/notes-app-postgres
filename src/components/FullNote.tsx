@@ -19,8 +19,8 @@ const FullNote = ({ note }: { note: Note }) => {
             <AlertDialogTrigger><ExternalLink /></AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader className="flex flex-col gap-10">
-                    <AlertDialogTitle className="text-2xl">{note.title}</AlertDialogTitle>
-                    <AlertDialogDescription className="text-lg">{note.note}</AlertDialogDescription>
+                    <AlertDialogTitle className="text-2xl break-all">{note.title}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-lg break-all h-3/5 overflow-y-auto">{note.note}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogAction>Continue</AlertDialogAction>

@@ -34,22 +34,22 @@ const NoteCard = ({ note }: { note: Note }) => {
                 });
             }
         } catch (error) {
-            console.log(error)
+            toast.error((error as { message: string }).message)
         }
         setIsDeleting(false)
     }
 
     return (
-        <div>
+        <div className="col-span-4 md:col-span-2 lg:col-span-1">
 
-            <div className='col-span-4 md:col-span-2 lg:col-span-1 h-64 rounded-lg flex flex-col justify-between gap-4 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.12)] relative'>
+            <div className='h-64 rounded-lg flex flex-col justify-between gap-4 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.12)] relative'>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 w-full">
                     <div className="flex gap-4">
-                        <h3 className="text-xl font-semibold">{note.title.length > 40 ? `${note.title.slice(0, 20)}...` : note.title}</h3>
+                        <h3 className="text-xl font-semibold break-words">{note.title.length > 40 ? `${note.title.slice(0, 20)}...` : note.title}</h3>
                         <FullNote note={note} />
                     </div>
-                    <p>{note.note.length > 40 ? `${note.note.slice(0, 45)}...` : note.note}</p>
+                    <p className=" break-words">{note.note.length > 40 ? `${note.note.slice(0, 45)}...` : note.note}</p>
                 </div>
 
                 <div className="flex gap-3 justify-between">
